@@ -9,6 +9,7 @@
     - "{{ postgres_library }}"
   loop_control:
     loop_var: __package
+    label: "{{ __package }}"
 
 - name: Check if Postgres initialized
   stat:
@@ -49,6 +50,7 @@
       loop: "{{ postgres_databases }}"
       loop_control:
         loop_var: __database
+        label: "{{ __database.name }}"
 
     - name: Create Postgres user#(s) 
       postgresql_user:
@@ -62,7 +64,8 @@
       loop: "{{ postgres_users }}"
       loop_control:
         loop_var: __user
-      no_log: "{{ postgres_user_no_log_state | default(false) }}" 
+        label: "{{ __user.name }}"
+      no_log: "{{ postgres_user_no_log_state | default(true) }}" 
 
 
   become_user: "{{ postgres_user }}"

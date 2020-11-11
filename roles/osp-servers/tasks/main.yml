@@ -42,6 +42,7 @@
     loop: "{{ r_instances.results }}"
     loop_control:
       loop_var: __instance
+      label: "{{ __instance.item.value.name }}"
 
 
   - name: Add floating IP to instances
@@ -56,6 +57,7 @@
     loop: "{{ r_instances.results }}"
     loop_control:
       loop_var: __instance
+      label: "{{ __instance.item.value.name }}"
     register: r_floating_ips
 
   - name: Wait for servers by name to be available
@@ -67,18 +69,5 @@
     loop: "{{ r_floating_ips.results }}"
     loop_control:
       loop_var: __fip
+      label: "{{ __fip.floating_ip.floating_ip_address }}"
     delegate_to: "{{ inventory_hostname }}"
-
-
-      
-# - name: Fetch Instance Info
-#    os_server_info:
-#      cloud: openstack
-#    register: result
-#
-#  - name: Display all variables/facts known for a host
-#    debug:
-#       msg: " Public IP is {{ __osp.public_v4 }}"
-#    loop: "{{ result.openstack_servers }}"
-#    loop_control:
-#      loop_var: __osp

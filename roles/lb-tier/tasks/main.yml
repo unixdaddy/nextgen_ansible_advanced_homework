@@ -1,12 +1,12 @@
 ---
-  - name: Install the for load-balancer
+  - name: Install the {{ payload }} software for load-balancer
     package:
       name:
         - " {{ payload }}"
       state: latest
     register: result
 
-  - name: Template a file to /etc/files.conf
+  - name: Configure {{ payload }} configuration file 
     template:
       src: haproxy.cfg.j2
       dest: /etc/haproxy/haproxy.cfg

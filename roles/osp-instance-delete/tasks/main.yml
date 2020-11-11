@@ -14,3 +14,4 @@
      loop: "{{ result.openstack_servers }}"
      loop_control:
        loop_var: __osp
+       label: "{{ __osp.name }}"
